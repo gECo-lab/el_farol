@@ -16,6 +16,11 @@
       }
     }
   ],
+  "agents_classes":[
+    "LikeSixtyPercentPlayer",
+    "RandomPlayer",
+    "PredictorBasedPlayer"
+  ],
   "agents": [
     {
       "agent_type": "LikeSixtyPercentPlayer",
@@ -23,24 +28,8 @@
       "agent_spaces": [
         "EFBGame"
       ],
-      "no_of_agents": 10
-    }
-  ],
-  "observers": [
-    {
-      "observer_type": "Observer",
-      "observer_name": "L60Obs",
-      "observer_actions": [
-        "obs_bpl"
-      ],
-      "observer_agent": "LikeSixtyPercentPlayer",
-      "observable_vars": [
-        "payoff",
-        "my_play",
-        "selected_predictor",
-        "predictor_fitness",
-        "predictor_prediction"
-      ]
+      "no_of_agents": 10,
+      "has_observer": true
     }
   ]
 }

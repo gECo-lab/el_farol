@@ -1,3 +1,3 @@
-from .game import EFBGame
+from .space import EFBGame
 
 __all__ = ['EFBGame']
