@@ -22,7 +22,7 @@
         },
         {
           "parameter_name": "no_of_steps",
-          "parameter_value": 100
+          "parameter_value": 500
         }
       ],
       "scenario_variables": [
@@ -38,19 +38,29 @@
             "var_name": "selected_predictor",
             "var_type": "str",
             "var_dist": "none",
-            "var_value": ""
+            "var_value": "",
+            "observed": true
           },
           {
             "var_name": "predictor_fitness",
             "var_type": "str",
             "var_dist": "none",
-            "var_value": ""
+            "var_value": "",
+            "observed": true
           },
           {
             "var_name": "predictor_prediction",
             "var_type": "str",
             "var_dist": "none",
-            "var_value": ""
+            "var_value": "",
+            "observed": true
+          },
+                    {
+            "var_name": "my_play",
+            "var_type": "str",
+            "var_dist": "none",
+            "var_value": "",
+            "observed": true
           }
         ]
       }

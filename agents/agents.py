@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Agents for the el farol bar problem """
 
-from agent.basicAgents import DiscreteEventAgent
+from kernel.agent.basicAgents import DiscreteEventAgent
 from .el_farol_bar_action_set import Strategy, RandomPlay, LikeCrowded, LikeSixtyPercent
 import random
 
