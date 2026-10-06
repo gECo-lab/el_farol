@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """ El Farol Bar space implementation """
 
+from EcoSimpy import Space
 import random
-
-from space.basicSpaces import Space
 
 
 class EFBGame(Space):
@@ -22,10 +21,6 @@ class EFBGame(Space):
 
         self.number_of_agents = 0
         self.frequency = [random.randint(0, 100)]
-
-    def step(self):
-        """ The the step from schedule """
-        self.step = self.model.simulation.schedule.step
 
     def update(self):
         """ Implemented by subclass - Testing update """

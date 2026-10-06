@@ -18,7 +18,7 @@ class Strategy:
         self.strategy_name = "classical"
         self.strategy = self.STRATEGY[0]
         self.target = 0.6
-        self.no_of_agents = self.agent.model.no_of_agents()
+        self.no_of_agents = self.agent.simulation.no_of_agents()
         self.target_no = round(self.no_of_agents * self.target)
         self.frequency = [0]
         self.prediction_model = PredictionModel(agent, recall)
@@ -119,8 +119,8 @@ class LikeSixtyPercent(Strategy):
 
 class RandomPlay(Strategy):
     """ Strategy under random """
-    def __init__(self, agent):
-        super().__init__(agent)
+    def __init__(self, agent, recall):
+        super().__init__(agent, recall)
         self.strategy_name = "random"
 
     def select_strategy(self):

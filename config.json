@@ -1,20 +1,12 @@
 {
-  "Description": "Configuration file for the el farol model",
-  "paths":
-    {
-      "kernel": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/main/EcoSim_p/",
-      "app": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/apps/el_farol/",
-      "models": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/apps/el_farol/models/",
-      "scenarios": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/apps/el_farol/scenarios/",
-      "runs": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/apps/el_farol/runs/",
-      "results": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/apps/el_farol/results/",
-      "analisys": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSim_p/apps/el_farol/analisys/"
-    },
-  "files":
-    {
-      "model": "model.json",
-      "scenarios": "scenarios.json",
-      "analisys": "ipd.rmd",
-      "results": "ipd.html"      
+    "Description": "Configuration file for EcoSimpy simulation",
+    "License": "GPL-3.0",
+    "paths": {
+        "app": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSimpy_dev/examples/el_farol",
+        "runs": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSimpy_dev/examples/el_farol/runs/",
+        "results": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSimpy_dev/examples/el_farol/results/",
+        "analisys": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSimpy_dev/examples/el_farol/analisys/",
+        "models": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSimpy_dev/examples/el_farol/models/",
+        "scenarios": "/home/rivero/Dropbox/Workspace_Current/Projects/Apps/EcoSim/EcoSimpy_dev/examples/el_farol/scenarios/"
     }
 }

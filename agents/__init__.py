@@ -1,4 +1,5 @@
-from .agents import Player, RandomPlayer, LikeCrowdedPlayer, LikeSixtyPercentPlayer
+from .agents import *
 
 
-__all__ = ["Player", "RandomPlayer", "LikeCrowdedPlayer", "LikeSixtyPercentPlayer"]
+__all__ = ["Player","RandomPlayer", "MeanPlayer","TrendPlayer","ContrarianPlayer","GrudgerPlayer","FOMOPlayer","ReactivePlayer"]
+

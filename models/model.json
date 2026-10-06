@@ -1,35 +1,58 @@
 {
   "simulation_name": "elFarolClassic",
   "model_name": "elFarolClassic",
+
+  "model_variables": {
+    "comfort_limit": 60,
+    "bar_capacity": 100
+  },
+
   "schedule": [
     {
       "schedule_type": "MixedSchedule",
       "schedule_name": "MyMxSchd"
     }
   ],
+
   "spaces": [
     {
       "space_type": "EFBGame",
       "space_name": "EFBGame",
       "space_variables": {
-        "payoffs": 0.0
+        "payoffs": 0.0,
+        "comfort_limit": 60,
+        "bar_capacity": 100
       }
     }
   ],
-  "agents_classes":[
-    "LikeSixtyPercentPlayer",
-    "RandomPlayer",
-    "PredictorBasedPlayer"
-  ],
+
+  "agents_classes": ["RandomPlayer", "LikeCrowdedPlayer", "LikeSixtyPercentPlayer"],
+
   "agents": [
     {
+      "agent_type": "RandomPlayer",
+      "agent_prefix": "rndp",
+      "agent_spaces": ["EFBGame"],
+      "no_of_agents": 10,
+      "has_observer": true
+    },
+    {
+      "agent_type": "LikeCrowdedPlayer",
+      "agent_prefix": "lcp",
+      "agent_spaces": ["EFBGame"],
+      "no_of_agents": 10,
+      "has_observer": true
+    },
+    {
       "agent_type": "LikeSixtyPercentPlayer",
-      "agent_prefix": "L60p",
-      "agent_spaces": [
-        "EFBGame"
-      ],
+      "agent_prefix": "lsp",
+      "agent_spaces": ["EFBGame"],
       "no_of_agents": 10,
       "has_observer": true
     }
-  ]
+  ],
+
+  "observer": {
+    "frequency": 1
+  }
 }

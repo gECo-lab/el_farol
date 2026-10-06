@@ -21,7 +21,7 @@ class PredictionModel:
         self.model_name = "no_prediction"
         self.agent = agent
         self.recall = recall
-        self.no_of_agents = self.agent.model.no_of_agents()
+        self.no_of_agents = self.agent.simulation.no_of_agents()
 
         self.predictors = {'st_same_lw': self.st_same_lw,
                            # 'st_mirror_50_lw': self.st_mirror_50_lw,
@@ -44,7 +44,7 @@ class PredictionModel:
 
     def no_of_agents(self):
         """ Returns the number of agents """
-        self.no_of_agents = self.agent.model.no_of_agents()
+        self.no_of_agents = self.agent.simulation.no_of_agents()
         return self.no_of_agents
 
     def agent_memory(self):
@@ -99,7 +99,7 @@ class PredictionModel:
 
     def st_mirror_50_lw(self):
         """ Strategy 2. a mirror image around 50 of last week's """
-        no_of_agents = self.agent.model.no_of_agents()
+        no_of_agents = self.agent.simulation.no_of_agents()
         last = len(self.agent.memory) - 1
         prediction = no_of_agents - self.agent.memory[last]
         if prediction < 0:
