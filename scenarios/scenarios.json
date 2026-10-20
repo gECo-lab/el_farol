@@ -30,6 +30,16 @@
           "var_name": "payoffs",
           "var_init_value": 0.0,
           "var_type": "sharp"
+        },
+        {
+          "var_name": "bar_capacity",
+          "var_init_value": 100,
+          "var_type": "sharp"
+        }, 
+        {
+          "var_name": "comfort_limit",
+          "var_init_value": 60,
+          "var_type": "sharp"
         }
       ],
       "agents_init": {

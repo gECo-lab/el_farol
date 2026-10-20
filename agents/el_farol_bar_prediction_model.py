@@ -2,7 +2,19 @@
 """ Prediction Model for the El Farol Problem """
 
 import random
+from dataclasses import dataclass, field
+from typing import Callable
+
 import numpy as np
+
+
+@dataclass
+class Predictor:
+    """Predictor structure used by the prediction model."""
+    name: str
+    function: Callable[[], int]
+    fitness: list[float] = field(default_factory=list)
+    prediction: list[int] = field(default_factory=list)
 
 
 class PredictionModel:
@@ -23,20 +35,34 @@ class PredictionModel:
         self.recall = recall
         self.no_of_agents = self.agent.simulation.no_of_agents()
 
-        self.predictors = {'st_same_lw': self.st_same_lw,
-                           # 'st_mirror_50_lw': self.st_mirror_50_lw,
-                           'st_round_avg_4w': self.st_round_avg_4w,
-                           'st_trend_8w': self.st_trend_8w,
-                           'st_same_2w': self.st_same_2w,
-                           'st_same_5w': self.st_same_5w}
-
-        self.predictors_fitness = {key: [random.random()]
-                                   for key in self.predictors.keys()
-                                   }
-        self.predictions = {key: [random.randrange(0, self.no_of_agents)]
-                            for key in self.predictors.keys()
-                            }
+        predictor_functions = {
+            'st_same_lw': self.st_same_lw,
+            # 'st_mirror_50_lw': self.st_mirror_50_lw,
+            'st_round_avg_4w': self.st_round_avg_4w,
+            'st_trend_8w': self.st_trend_8w,
+            'st_same_2w': self.st_same_2w,
+            'st_same_5w': self.st_same_5w
+        }
+        self.predictors = {
+            name: Predictor(
+                name=name,
+                function=function,
+                fitness=[random.random()],
+                prediction=[random.randrange(0, self.no_of_agents)]
+            )
+            for name, function in predictor_functions.items()
+        }
         self.fitness_function = FitnessFunction(self)
+
+    @property
+    def predictors_fitness(self):
+        """Compatibility view of predictors fitness per predictor name."""
+        return {name: predictor.fitness for name, predictor in self.predictors.items()}
+
+    @property
+    def predictions(self):
+        """Compatibility view of predictions per predictor name."""
+        return {name: predictor.prediction for name, predictor in self.predictors.items()}
 
     def step(self):
         """ get agent step """
@@ -54,44 +80,47 @@ class PredictionModel:
     def make_prediction(self, selected_predictors):
         """ The prediction based on the model """
         for name in selected_predictors:
-            prediction = self.predictors[name]()
-            self.predictions[name].append(prediction)
+            predictor = self.predictors[name]
+            prediction = predictor.function()
+            predictor.prediction.append(prediction)
 
     def update_fitness(self, predictors, going, target_no):
         """ Updates the fitness of the predictors """
         for name in predictors:
             fitness = self.get_fitness_of_predictor(name, going, target_no)
-            self.predictors_fitness[name].append(fitness)
+            self.predictors[name].fitness.append(fitness)
 
     def get_fitness_of_predictor(self, predictor_name, going, target_no):
         """ Updates the fitness of one predictor """
+        predictor = self.predictors[predictor_name]
+
         if len(going) < self.recall:
-            fitness = self.fitness_function.fitness(going, self.predictions[predictor_name])
+            fitness = self.fitness_function.fitness(going, predictor.prediction)
         else:
             fitness = self.fitness_function.fitness(going[0:self.recall],
-                                                    self.predictions[predictor_name][0:self.recall]
+                                                    predictor.prediction[0:self.recall]
                                                     )
 
         return fitness
 
     def get_best_prediction(self):
         """ Get the prediction from the fittest predictor """
-        predictors_fitness = self.predictors_fitness
-        fittest_predictor = max(predictors_fitness, key=predictors_fitness.get)
-        return(self.predictions[fittest_predictor][self.step()])
+        fittest_predictor = max(self.predictors.values(),
+                                key=lambda predictor: predictor.fitness)
+        return fittest_predictor.prediction[self.step()]
 
     def get_best_predictor(self, predictors):
         """ Get the prediction from the fittest predictor """
-        max_fitness = max(self.predictors_fitness.values())
-        fittest_predictor = max(self.predictors_fitness,
-                                key=self.predictors_fitness.get)
-        prediction = self.predictions[fittest_predictor]
-        return [fittest_predictor, max_fitness, prediction]
+        max_fitness = max(predictor.fitness for predictor in self.predictors.values())
+        fittest_predictor = max(self.predictors.values(),
+                                key=lambda predictor: predictor.fitness)
+        return [fittest_predictor.name, max_fitness, fittest_predictor.prediction]
 
     def get_fitness(self, predictor_name):
         """ Get the fitness of one predictor """
-        return self.predictors_fitness[predictor_name]
+        return self.predictors[predictor_name].fitness
 
+    #### Predictors
     def st_same_lw(self):
         """ Strategy 1. the same as last week's """
         last = len(self.agent.memory) - 1

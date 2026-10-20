@@ -91,13 +91,14 @@ class LikeCrowded(Strategy):
         super().__init__(agent, recall)
         self.strategy_name = "likeCrowded"
         self.strategy = self.STRATEGY[0]
+        self.target_no = self.agent.active_scenario.bar_capacity
 
     def select_strategy(self):
         """ Like Crownded Strategy """
         self.prediction_model.make_prediction(self.predictors)
         prediction = self.prediction_model.get_best_prediction()
 
-        if prediction > self.target_no:
+        if prediction >= self.target_no:
             self.strategy = self.STRATEGY[0]
         else:
             self.strategy = self.STRATEGY[1]
@@ -115,6 +116,24 @@ class LikeSixtyPercent(Strategy):
     def __init__(self, agent, recall):
         super().__init__(agent, recall)
         self.strategy_name = "likeSixtyPercent"
+        self.strategy = self.STRATEGY[0]
+        self.target_no = self.agent.active_scenario.bar_capacity*0.6
+
+    def select_strategy(self):
+        """ Like Sixty Percent Strategy """
+        self.prediction_model.make_prediction(self.predictors)
+        prediction = self.prediction_model.get_best_prediction()
+
+        if prediction <= self.target_no:
+            self.strategy = self.STRATEGY[0]
+        else:
+            self.strategy = self.STRATEGY[1]
+
+        return self.strategy
+
+    def payoff(self, agent_play):
+        """ Specialized by subclass """
+        return random.randint(0,100)
 
 
 class RandomPlay(Strategy):

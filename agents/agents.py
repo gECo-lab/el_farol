@@ -51,8 +51,8 @@ class Player(DiscreteEventAgent):
         self.game_payoff()
         selected_predictor = self.strategy.selected_predictor()
         self.selected_predictor = selected_predictor[0]
-        self.predictor_fitness = selected_predictor[1][self.my_step]
-        self.predictor_prediction = selected_predictor[2][self.my_step]
+        self.predictor_fitness = selected_predictor[1][-1]
+        self.predictor_prediction = selected_predictor[2][-1]
         self.my_play = self.strategy.select_game()
 
     def play(self):
@@ -132,10 +132,19 @@ class RandomPlayer(Player):
     """ A player that makes random decisions """
     def __init__(self, simulation, scenario, agent_number, agent_def):
         super().__init__(simulation, scenario,  agent_number, agent_def)
+        self.active_scenario = scenario
         self.strategy = RandomPlay(self, self.memory_recall)
+        self.selected_predictor = "random"
+        self.predictor_fitness = 1
+        self.bar_capacity = self.active_scenario.bar_capacity
+        self.comfort_limit = self.active_scenario.comfort_limit
 
     def select_game(self):
         """Random selection of the game"""
+        self.selected_predictor = "random"
+        self.predictor_fitness = 1
+        self.predictor_prediction = random.randint(0, self.bar_capacity)
+        
         if random.random() > .5:
             self.my_play = "GOING"
         else:
@@ -149,13 +158,15 @@ class LikeCrowdedPlayer(Player):
         super().__init__(simulation, scenario,  agent_number, agent_def)
         self.strategy = LikeCrowded(self, self.memory_recall)
 
-    def select_game(self):
-        """ The agent select a play from a strategy """
-        selected_predictor = self.strategy.selected_predictor()
-        self.selected_predictor = selected_predictor[0]
-        self.predictor_fitness = selected_predictor[1][self.my_step]
-        self.predictor_prediction = selected_predictor[2][self.my_step]
-        self.my_play = self.strategy.select_game()
+#     def select_game(self):
+#         """ The agent select a play from a strategy """
+#         selected_predictor = self.strategy.selected_predictor()
+# #        print("my step: ", self.my_step, 
+# #             "selected predictor: ", selected_predictor[1])
+#         self.selected_predictor = selected_predictor[0]
+#         self.predictor_fitness = selected_predictor[1]#[self.my_step]
+#         self.predictor_prediction = selected_predictor[2][self.my_step]
+#         self.my_play = self.strategy.select_game()
 
 
 class LikeSixtyPercentPlayer(Player):
